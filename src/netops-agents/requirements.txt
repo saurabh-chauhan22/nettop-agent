@@ -1,0 +1,13 @@
+langgraph
+langchain
+langchain-anthropic
+langsmith
+duckdb
+faiss-cpu
+chromadb
+pydantic
+pytest
+langchain-mcp-adapters
+mcp
+boto3
+pyarrow

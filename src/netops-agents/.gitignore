@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/*.parquet
+*.duckdb
+.langgraph_api/
+.pytest_cache/
