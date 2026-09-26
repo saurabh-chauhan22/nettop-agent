@@ -6,3 +6,5 @@ data/*.parquet
 *.duckdb
 .langgraph_api/
 .pytest_cache/
+audit.log
+settings.ini

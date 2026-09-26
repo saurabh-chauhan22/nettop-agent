@@ -1,0 +1,6 @@
+{"device_id": "MODEM-006", "start": "2026-09-24 12:00:00", "end": "2026-09-24 14:00:00", "root_cause": "rf_impairment", "action": "escalate_field_tech"}
+{"device_id": "MODEM-012", "start": "2026-09-24 04:00:00", "end": "2026-09-24 06:00:00", "root_cause": "rf_impairment", "action": "escalate_field_tech"}
+{"device_id": "MODEM-003", "start": "2026-09-24 08:00:00", "end": "2026-09-24 10:00:00", "root_cause": "dhcp_storm", "action": "dhcp_discard_clear"}
+{"device_id": "MODEM-016", "start": "2026-09-24 18:00:00", "end": "2026-09-24 20:00:00", "root_cause": "dhcp_storm", "action": "dhcp_discard_clear"}
+{"device_id": "MODEM-009", "start": "2026-09-24 06:00:00", "end": "2026-09-24 08:00:00", "root_cause": "interface_flap", "action": "interface_reset"}
+{"device_id": "MODEM-018", "start": "2026-09-24 15:00:00", "end": "2026-09-24 17:00:00", "root_cause": "interface_flap", "action": "interface_reset"}

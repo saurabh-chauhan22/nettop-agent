@@ -11,3 +11,5 @@ langchain-mcp-adapters
 mcp
 boto3
 pyarrow
+pandas
+numpy
