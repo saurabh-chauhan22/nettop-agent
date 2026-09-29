@@ -1,5 +1,6 @@
 """Agent tools: read-only queries over the DuckDB lake, plus simulated remediation actions with an audit log."""
 import os
+import re
 from datetime import datetime
 
 import duckdb
@@ -27,10 +28,24 @@ def lake():
     return conn
 
 
-def rows(conn, sql, params=None):
+def rows(conn, sql, params=None, limit=None):
     cur = conn.execute(sql, params) if params else conn.execute(sql)
     cols = [d[0] for d in cur.description]
-    return [dict(zip(cols, r)) for r in cur.fetchall()]
+    return [dict(zip(cols, r)) for r in (cur.fetchmany(limit) if limit else cur.fetchall())]
+
+
+# ponytail: keyword denylist; production would also run LLM-written SQL under a database role that can only SELECT
+FORBIDDEN_SQL = re.compile(r"://|\b(read_\w+|glob|attach|detach|copy|install|load|pragma|export|import|set)\b", re.I)
+
+
+def check_select(sql):
+    """Allow exactly one SELECT statement with no file, network, or settings access.
+    A second layer on top of the read-only connection, for SQL an LLM wrote."""
+    statements = duckdb.connect().extract_statements(sql)
+    if len(statements) != 1 or statements[0].type != duckdb.StatementType.SELECT:
+        raise ValueError("Only a single SELECT statement is allowed")
+    if FORBIDDEN_SQL.search(sql):
+        raise ValueError("The query uses a file, network, or settings feature that is not allowed")
 
 
 def gather_evidence(device_id, start, end, conn=None):

@@ -1,0 +1,6 @@
+{"question": "How many cable modems are connected to CMTS-WEST-01?", "reference_sql": "SELECT count(*) FROM topology WHERE parent_id = 'CMTS-WEST-01'"}
+{"question": "Which modem had the lowest single SNR reading?", "reference_sql": "SELECT device_id FROM device_telemetry ORDER BY snr_db LIMIT 1"}
+{"question": "How many CRITICAL syslog messages are in the data?", "reference_sql": "SELECT count(*) FROM syslogs WHERE severity = 'CRITICAL'"}
+{"question": "How many DHCP DISCOVER messages were sent in total across all devices?", "reference_sql": "SELECT sum(\"count\") FROM dhcp_events WHERE event_type = 'DISCOVER'"}
+{"question": "What was the highest transmit power reading, in dBmV?", "reference_sql": "SELECT max(tx_power_dbmv) FROM device_telemetry"}
+{"question": "What software version do the cable modems run?", "reference_sql": "SELECT DISTINCT sw_version FROM device_config WHERE device_id LIKE 'MODEM-%'"}
