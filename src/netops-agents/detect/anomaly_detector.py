@@ -29,3 +29,22 @@ ORDER BY device_id
 
 def detect(conn=None) -> list[dict]:
     return rows(conn or lake(), DETECT_SQL)
+
+
+# Triage order, most urgent first. A fixed rule, reviewable in code; in production NSOC SMEs would set it.
+SEVERITY = [
+    ("snr_drop", "RF signal loss"),  # needs a field tech, which has the longest lead time
+    ("link_down", "Link loss"),
+    ("errors", "Errors"),
+    ("dhcp_discover_burst", "DHCP storm"),
+]
+TRIAGE_RULE = ("Ranked by a fixed severity rule: RF signal loss first (it needs a field tech, the longest lead time), "
+               "then link loss, then errors, then DHCP storms. Ties go to the longer anomaly.")
+
+
+def rank(events: list[dict]) -> list[dict]:
+    """Detector events, most urgent first, each labeled with its severity tier."""
+    def tier(e):
+        return next((i for i, (signal, _) in enumerate(SEVERITY) if signal in e["signals"]), len(SEVERITY))
+    ranked = sorted(events, key=lambda e: (tier(e), -(e["end_ts"] - e["start_ts"]).total_seconds(), e["device_id"]))
+    return [{**e, "severity": SEVERITY[tier(e)][1] if tier(e) < len(SEVERITY) else "Other"} for e in ranked]
