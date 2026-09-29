@@ -1,0 +1,17 @@
+# Memory services for AgentNet. Start: docker compose up -d   Stop: docker compose down
+services:
+  redis:  # short-term memory: live conversation state (LangGraph checkpointer)
+    image: redis/redis-stack-server:latest  # includes the search and JSON modules langgraph-checkpoint-redis needs
+    ports: ["6379:6379"]
+    restart: unless-stopped
+  postgres:  # long-term memory: conversation history (LangGraph store)
+    image: postgres:16
+    environment:
+      POSTGRES_USER: agentnet
+      POSTGRES_PASSWORD: agentnet  # local development only
+      POSTGRES_DB: agentnet
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    restart: unless-stopped
+volumes:
+  pgdata:

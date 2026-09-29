@@ -1,4 +1,8 @@
 langgraph
+langgraph-checkpoint-redis
+langgraph-checkpoint-postgres
+psycopg[binary]
+psycopg-pool
 langchain
 langchain-anthropic
 langsmith
@@ -13,3 +17,5 @@ boto3
 pyarrow
 pandas
 numpy
+starlette
+uvicorn
