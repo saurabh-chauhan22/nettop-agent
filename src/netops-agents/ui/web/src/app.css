@@ -1,0 +1,60 @@
+/* Dark workspace: black frame, a violet-lit panel, light violet for signal traces */
+:root {
+  --black: #09080b;
+  --panel: #141117;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.15);
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --text: #f2eff6;
+  --muted: #9b93a6;
+  --accent: #a35cf0;
+  --accent-soft: #cfa8ff;
+  --fault: #f26d82;
+  --caution: #f0b35a;
+
+  /* Trace.svelte reads these */
+  --plate: rgba(255, 255, 255, 0.03);
+  --trace: var(--accent-soft);
+  --fault-wash: rgba(242, 109, 130, 0.3);
+
+  --body: 'Inter', system-ui, sans-serif;
+  --code: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  color: var(--text);
+  background: var(--black);
+  font: 400 0.9375rem/1.5 var(--body);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1, h2, h3, p, ul, ol, pre { margin: 0; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 2px;
+}
+
+button {
+  font: 500 0.875rem/1.2 var(--body);
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+button:disabled { opacity: 0.45; cursor: default; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; scroll-behavior: auto !important; }
+}

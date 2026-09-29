@@ -8,3 +8,6 @@ data/*.parquet
 .pytest_cache/
 audit.log
 settings.ini
+replacements.txt
+ui/web/node_modules/
+ui/web/dist/
